@@ -5,4 +5,6 @@ app.use(express.json())
 app.use('/api/v1/teachers',adminRoutes)
 
 
+app.use()
+
 module.exports = app

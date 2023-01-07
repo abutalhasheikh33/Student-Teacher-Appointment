@@ -14,6 +14,17 @@ const filterObj = (obj)=>{
     return newObj;
 }
 
+exports.allow = (...roles)=>{
+    return (req,res,next)=>{
+        if(roles.includes(req.body.role)){
+           next() 
+        }
+        else{
+            next()
+        }
+    }
+}
+
 exports.createTeacher = async (req,res,next)=>{
     try{
         
