@@ -1,4 +1,4 @@
-module.exports = (err,req,res)=>{
+module.exports = (err,req,res,next)=>{
     let error = Object.create(err)
     error.statusCode = error.statusCode || 500
     error.status = error.status || "Fail"
@@ -9,3 +9,5 @@ module.exports = (err,req,res)=>{
         stack:err.stack
     })
 }
+
+

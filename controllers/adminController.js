@@ -1,5 +1,13 @@
 const User = require('../models/User')
+const AppError = require('../utils/AppError')
+exports.setRole=function(role){
+    return (req,res,next)=>{
+        req.body.roles=role
+        next()
+    }
 
+    
+}
 const filterObj = (obj)=>{
     
     const newObj={}
@@ -15,12 +23,15 @@ const filterObj = (obj)=>{
 }
 
 exports.allow = (...roles)=>{
+    
     return (req,res,next)=>{
-        if(roles.includes(req.body.role)){
+        req.user={}
+        req.user.role="admin"
+        if(roles.includes(req.user.role)){
            next() 
         }
         else{
-            next()
+            next(new AppError('Admin only access',401))
         }
     }
 }
@@ -34,10 +45,12 @@ exports.createTeacher = async (req,res,next)=>{
             department:req.body.department,
             subject:req.body.subject,
             age:req.body.age,
-            roles:"Teacher"
+            roles:req.body.roles,
+            password:req.body.password,
+            passwordConfirm:req.body.passwordConfirm
     
         }
-
+        console.log(user)
         const newUser = await User.create(user)
         return res.status(200).json({
             status:"SUCCESS",
