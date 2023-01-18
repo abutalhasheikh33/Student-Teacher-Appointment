@@ -4,7 +4,7 @@ module.exports = (err,req,res,next)=>{
     error.status = error.status || "Fail"
     res.status(error.statusCode).json({
         status:error.status,
-        error:err,
+        
         message:error.message,
         stack:err.stack
     })

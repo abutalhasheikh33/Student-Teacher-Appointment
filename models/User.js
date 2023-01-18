@@ -1,6 +1,7 @@
 const mongoose=require('mongoose')
 const bcrypt = require('bcrypt')
 const AppError = require('../utils/AppError')
+let crypto = require('crypto')
 const userSchema = new mongoose.Schema({
     email:{
         type:String,
@@ -28,7 +29,7 @@ const userSchema = new mongoose.Schema({
     roles:{
         type:String,
         required:true,
-        default:"Student"
+        default:"student"
 
 },
 password:{
@@ -44,6 +45,10 @@ passwordConfirm:{
         },
         message:"Password and password confirm field must have same values"
     }
+},
+appointments:{
+    type:mongoose.Schema.ObjectId,
+    ref:"Appointment"
 }
 
 })
@@ -52,9 +57,13 @@ userSchema.pre('save',async function(next){
     if(!this.isModified('password')){
         return next()
     }
-   const hash = await bcrypt.hash(this.password,10)
-   this.password=hash
-   this.passwordConfirm=undefined
+    
+       
+    const hash = await bcrypt.hash(this.password,10)
+    this.password=hash
+    this.passwordConfirm=undefined
+
+   
    next()
 
 })
