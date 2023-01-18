@@ -85,8 +85,11 @@ const Appointment = require("../models/Appointment");
  */
 
 
-exports.createAppointment = async (req,res,next)=>{
-    console.log(new Date(2022,10,10,6,13,12,0).toString())
+exports.createAppointment = catchAsync( async (req,res,next)=>{
+    /* console.log(new Date(2022,10,10,6,13,12,0).toString())
+    const pastAppointment = await Appointment.find().sort( { createdAt:-1 } ).limit(1) */
+
+
     const appointment = {
         sendBy:req.body.sendBy,
         sendTo:req.body.sendTo,
@@ -94,11 +97,25 @@ exports.createAppointment = async (req,res,next)=>{
         scheduleAt:new Date(2022,10,10,6,13,12,0).toString(),
         status:true
     }
-    const newAppointment = await Appointment.create(appointment)
+    /* const newAppointment = await Appointment.create(appointment)
+    const newUserId = await User.findByIdAndUpdate(req.user.id,{
+        $push:{
+            appointments:newAppointment._id
+        } 
+    }) */
     res.status(200).json({
         status:'SUCCESS',
         data:{
             appointment
         }
     })
-}
+})
+
+exports.deleteAppointment = catchAsync(async (req,res,next)=>{
+    const appointment = await Appointment.findByIdAndDelete(req.params.id)
+    await User.findByIdAndUpdate(req.user.id,{$pull:{appointments:appointment._id}})
+    res.status(200).json({
+        status:"SUCCESS",
+        message:"Appointment deleted",
+    })
+})

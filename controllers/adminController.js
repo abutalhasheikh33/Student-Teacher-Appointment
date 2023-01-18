@@ -93,7 +93,7 @@ exports.createTeacher = catchAsync(async (req,res,next)=>{
 
 exports.getAllTeachers = catchAsync(async (req,res,next)=>{
   
-        const users = await User.find()
+        const users = await User.find().populate('appointments')
         res.status(200).json({
             status:"SUCCESS",
             data:{

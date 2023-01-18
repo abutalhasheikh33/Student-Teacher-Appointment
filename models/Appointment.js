@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 
 
 const appointmentSchema = new mongoose.Schema({
+
     sendBy:{
         type:String,
         required:true
@@ -26,6 +27,8 @@ const appointmentSchema = new mongoose.Schema({
     
 
 })
+
+
 
 module.exports = mongoose.model('Appointment',appointmentSchema)
 

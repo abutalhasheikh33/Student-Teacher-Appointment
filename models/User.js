@@ -46,10 +46,13 @@ passwordConfirm:{
         message:"Password and password confirm field must have same values"
     }
 },
-appointments:{
-    type:mongoose.Schema.ObjectId,
-    ref:"Appointment"
-}
+appointments:[
+    {
+        type:mongoose.Schema.ObjectId,
+        ref:"Appointment"
+    }
+    
+]
 
 })
 

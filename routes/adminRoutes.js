@@ -1,5 +1,5 @@
 const express=require('express');
-const { verify } = require('jsonwebtoken');
+
 const { getAllTeachers, createTeacher, getTeacher, updateTeacher, deleteTeacher, allow, setRole } = require('../controllers/adminController');
 const { verifyToken } = require('../controllers/authController');
 const router = express.Router()
